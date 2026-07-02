@@ -1,0 +1,25 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: trust-manager
+  namespace: cert-manager
+spec:
+  interval: 30m
+  dependsOn:
+    - name: cert-manager
+    - name: cert-manager-approver-policy
+  chart:
+    spec:
+      chart: trust-manager
+      version: "0.24.x"
+      sourceRef:
+        kind: HelmRepository
+        name: jetstack
+  values:
+    app:
+      webhook:
+        tls:
+          approverPolicy:
+            enabled: true
+            certManagerNamespace: cert-manager

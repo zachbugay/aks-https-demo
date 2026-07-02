@@ -1,0 +1,52 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: demo-gateway
+  namespace: apps
+spec:
+  gatewayClassName: approuting-istio
+  infrastructure:
+    annotations:
+      service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+      service.beta.kubernetes.io/azure-load-balancer-ipv4: "10.0.3.240"
+  listeners:
+    - name: httpbin-http
+      port: 80
+      protocol: HTTP
+      hostname: zachb-httpbin.duckdns.org
+      allowedRoutes:
+        namespaces:
+          from: Same
+    - name: httpbin-https
+      port: 443
+      protocol: HTTPS
+      hostname: zachb-httpbin.duckdns.org
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            group: ""
+            name: httpbin-cert
+      allowedRoutes:
+        namespaces:
+          from: Same
+    - name: podinfo-http
+      port: 80
+      protocol: HTTP
+      hostname: zachb-podinfo.duckdns.org
+      allowedRoutes:
+        namespaces:
+          from: Same
+    - name: podinfo-https
+      port: 443
+      protocol: HTTPS
+      hostname: zachb-podinfo.duckdns.org
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            group: ""
+            name: podinfo-cert
+      allowedRoutes:
+        namespaces:
+          from: Same

@@ -1,0 +1,24 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: podinfo-cert
+  namespace: default
+spec:
+  secretName: podinfo-cert
+  duration: 2160h # 90d
+  renewBefore: 360h # 15d
+  commonName: zachb-podinfo.duckdns.org
+  dnsNames:
+    - zachb-podinfo.duckdns.org
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+    rotationPolicy: Always
+  usages:
+    - server auth
+    - digital signature
+    - key encipherment
+  issuerRef:
+    name: demo-ca-issuer
+    kind: ClusterIssuer
+    group: cert-manager.io
