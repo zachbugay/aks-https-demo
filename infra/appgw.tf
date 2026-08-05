@@ -11,16 +11,10 @@ locals {
     (local.agw_http_port_name)  = one(distinct([for app in var.appgw_applications : app.http_port]))
   }
 
-  # Fallback hostnames for applications that do not declare one explicitly.
-  agw_fallback_hostnames = {
-    httpbin = var.httpbin_hostname
-    podinfo = var.podinfo_hostname
-  }
-
   # Resolved application definitions with the derived Application Gateway child resource names.
   agw_applications = {
     for key, app in var.appgw_applications : key => merge(app, {
-      hostname                    = app.hostname != null ? app.hostname : lookup(local.agw_fallback_hostnames, key, "")
+      hostname                    = app.hostname
       probe_name                  = "istio-${key}-probe"
       backend_http_settings_name  = "${key}-http-setting"
       https_listener_name         = "${key}-https-listener"

@@ -25,16 +25,6 @@ variable "k8s_gateway_internal_ip" {
   default     = "10.0.3.240"
 }
 
-variable "httpbin_hostname" {
-  description = "Public hostname for the httpbin app. Must resolve to the App Gateway public IP."
-  type        = string
-}
-
-variable "podinfo_hostname" {
-  description = "Public hostname for the podinfo app. Must resolve to the App Gateway public IP."
-  type        = string
-}
-
 variable "appgw_applications" {
   description = <<-EOT
     Applications published through the Application Gateway. Each entry generates a health probe,
@@ -53,7 +43,7 @@ variable "appgw_applications" {
   EOT
 
   type = map(object({
-    hostname                  = optional(string)
+    hostname                  = string
     https_port                = optional(number, 443)
     http_port                 = optional(number, 80)
     probe_path                = string
