@@ -14,6 +14,11 @@ if kubectl --context="$AZURE_AKS_CLUSTER_NAME" \
   echo "Flux is already bootstrapped on '$AZURE_AKS_CLUSTER_NAME'; skipping bootstrap."
 else
   echo "Bootstrapping Flux on '$AZURE_AKS_CLUSTER_NAME'..."
+  # if [ ! -z "$GITHUB_TOKEN" ]; then
+  #   echo "No environment variable GITHUB_TOKEN found. Ensure you create a PAT."
+  #   echo "https://fluxcd.io/flux/installation/bootstrap/github/#github-pat"
+  #   exit 1
+  # fi
   flux bootstrap github \
     --components-extra=source-watcher \
     --context="$AZURE_AKS_CLUSTER_NAME" \
