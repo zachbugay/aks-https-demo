@@ -125,7 +125,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
 }
 
 # Enable AKS addons
-resource "azapi_update_resource" "aks_addons" {
+resource "azapi_update_resource" "this" {
   type        = "Microsoft.ContainerService/managedClusters@2026-04-02-preview"
   resource_id = azurerm_kubernetes_cluster.aks.id
 
@@ -146,6 +146,7 @@ resource "azapi_update_resource" "aks_addons" {
           }
         }
       },
+      # This is a public preview feature as of date of commit.
       var.enable_cilium_mtls ? {
         networkProfile = {
           advancedNetworking = {
