@@ -1,6 +1,6 @@
 terraform {
-  // Require (Major.Minor) 1.15, but a higher Patch version is okay. However, a higher (Major.Minor) is not acceptable.
-  required_version = "~> 1.15.0"
+  // Require (Major.Minor) 1.16, but a higher Patch version is okay. However, a higher (Major.Minor) is not acceptable.
+  required_version = "~> 1.16.0"
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"

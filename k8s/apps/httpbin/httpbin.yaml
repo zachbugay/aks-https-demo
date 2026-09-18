@@ -30,7 +30,7 @@ metadata:
     service: httpbin
 spec:
   ports:
-    - name: http
+    - name: https
       port: 8000
       targetPort: 8080
   selector:
@@ -57,5 +57,20 @@ spec:
         - image: docker.io/mccutchen/go-httpbin:v2.15.0
           imagePullPolicy: IfNotPresent
           name: httpbin
+          # go-httpbin serves HTTPS instead of HTTP when these are set, so the
+          # Gateway can reach it over TLS per the httpbin BackendTLSPolicy.
+          env:
+            - name: HTTPS_CERT_FILE
+              value: /etc/httpbin/tls/tls.crt
+            - name: HTTPS_KEY_FILE
+              value: /etc/httpbin/tls/tls.key
           ports:
             - containerPort: 8080
+          volumeMounts:
+            - name: backend-tls
+              mountPath: /etc/httpbin/tls
+              readOnly: true
+      volumes:
+        - name: backend-tls
+          secret:
+            secretName: httpbin-backend-tls

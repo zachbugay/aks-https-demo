@@ -10,7 +10,9 @@ spec:
         key: ca.crt
   target:
     configMap:
-      key: ca-bundle.crt
+      # ca.crt is the key BackendTLSPolicy's caCertificateRefs requires.
+      key: ca.crt
     namespaceSelector:
       matchLabels:
-        kubernetes.io/metadata.name: default
+        # httpbin and podinfo actually run in the "apps" namespace.
+        kubernetes.io/metadata.name: apps

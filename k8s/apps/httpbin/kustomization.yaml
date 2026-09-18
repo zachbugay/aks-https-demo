@@ -5,3 +5,4 @@ resources:
   - httpbin.yaml
   - httproute.yaml
   - certificate.yaml
+  - backend-tls-policy.yaml

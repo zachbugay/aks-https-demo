@@ -69,6 +69,7 @@ variable "appgw_applications" {
 
   default = {
     httpbin = {
+      hostname                    = "zachb-httpbin.duckdns.org"
       https_port                  = 443
       http_port                   = 80
       probe_path                  = "/get"
@@ -88,6 +89,7 @@ variable "appgw_applications" {
       http_redirect_rule_priority = 90
     }
     podinfo = {
+      hostname                    = "zachb-podinfo.duckdns.org"
       https_port                  = 443
       http_port                   = 80
       probe_path                  = "/healthz"
@@ -219,4 +221,3 @@ variable "enable_cilium_mtls" {
   type        = bool
   default     = false
 }
-

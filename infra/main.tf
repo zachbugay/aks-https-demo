@@ -107,23 +107,19 @@ resource "tls_self_signed_cert" "demo_ca" {
   ]
 }
 
-resource "kubernetes_namespace_v1" "cert_manager" {
+# This neededed to be commented out...
+data "kubernetes_namespace_v1" "cert_manager" {
   metadata {
     name = "cert-manager"
   }
 
-  lifecycle {
-    ignore_changes = [
-      metadata[0].labels,
-      metadata[0].annotations,
-    ]
-  }
+  depends_on = [ azurerm_kubernetes_cluster.aks ]
 }
 
 resource "kubernetes_secret_v1" "demo_ca" {
   metadata {
     name      = "demo-ca"
-    namespace = kubernetes_namespace_v1.cert_manager.metadata[0].name
+    namespace = data.kubernetes_namespace_v1.cert_manager.metadata[0].name
   }
 
   type = "kubernetes.io/tls"
