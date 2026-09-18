@@ -5,6 +5,12 @@ metadata:
   namespace: apps
 spec:
   gatewayClassName: approuting-istio
+  tls:
+    backend:
+      clientCertificateRef:
+        kind: Secret
+        group: ""
+        name: gateway-backend-client-tls
   infrastructure:
     annotations:
       service.beta.kubernetes.io/azure-load-balancer-internal: "true"

@@ -1,0 +1,22 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: gateway-backend-client-cert
+  namespace: apps
+spec:
+  secretName: gateway-backend-client-tls
+  duration: 2160h # 90d
+  renewBefore: 360h # 15d
+  commonName: demo-gateway-client
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+    rotationPolicy: Always
+  usages:
+    - client auth
+    - digital signature
+    - key encipherment
+  issuerRef:
+    name: demo-ca-issuer
+    kind: ClusterIssuer
+    group: cert-manager.io

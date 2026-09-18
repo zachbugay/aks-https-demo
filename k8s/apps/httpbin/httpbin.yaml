@@ -64,13 +64,21 @@ spec:
               value: /etc/httpbin/tls/tls.crt
             - name: HTTPS_KEY_FILE
               value: /etc/httpbin/tls/tls.key
+            - name: HTTPS_CLIENT_CA
+              value: /etc/httpbin/ca/ca.crt
           ports:
             - containerPort: 8080
           volumeMounts:
             - name: backend-tls
               mountPath: /etc/httpbin/tls
               readOnly: true
+            - name: backend-ca
+              mountPath: /etc/httpbin/ca
+              readOnly: true
       volumes:
         - name: backend-tls
           secret:
             secretName: httpbin-backend-tls
+        - name: backend-ca
+          configMap:
+            name: demo-ca-bundle

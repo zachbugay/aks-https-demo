@@ -1,6 +1,4 @@
 # https://gateway-api.sigs.k8s.io/guides/tls/#upstream-tls
-# Tells the Gateway to connect to the httpbin Service over TLS, validating
-# the backend's certificate against the cluster's demo CA.
 apiVersion: gateway.networking.k8s.io/v1
 kind: BackendTLSPolicy
 metadata:
