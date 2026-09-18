@@ -5,12 +5,14 @@ metadata:
   namespace: apps
 spec:
   gatewayClassName: approuting-istio
-  tls:
-    backend:
-      clientCertificateRef:
-        kind: Secret
-        group: ""
-        name: gateway-backend-client-tls
+  # clientCertificateRef is not supported yet on Istio.
+  # https://github.com/istio/istio/issues/61515
+  # tls:
+  #   backend:
+  #     clientCertificateRef:
+  #       kind: Secret
+  #       group: ""
+  #       name: gateway-backend-client-tls
   infrastructure:
     annotations:
       service.beta.kubernetes.io/azure-load-balancer-internal: "true"

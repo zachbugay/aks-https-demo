@@ -57,8 +57,7 @@ spec:
         - image: docker.io/mccutchen/go-httpbin:v2.15.0
           imagePullPolicy: IfNotPresent
           name: httpbin
-          # go-httpbin serves HTTPS instead of HTTP when these are set, so the
-          # Gateway can reach it over TLS per the httpbin BackendTLSPolicy.
+          # go-httpbin serves HTTPS instead of HTTP when these are set. The Gateway can reach it over TLS via httpbin BackendTLSPolicy.
           env:
             - name: HTTPS_CERT_FILE
               value: /etc/httpbin/tls/tls.crt
